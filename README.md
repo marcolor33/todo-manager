@@ -12,6 +12,8 @@ Backend endpoint: http://localhost:3001
 
 Frontend endpoint: http://localhost:3000
 
+Postman collection: https://crimson-rocket-582729.postman.co/workspace/Devpug~ee2ca793-2e62-42ce-8305-fece0f44c5e8/api/ff997f13-7327-4faf-a1b2-c34066f2487c?action=share&creator=10490686&active-environment=10490686-f5670aec-a033-4555-be1c-364a8753909d
+
 To initialize the `todo-manager` project, follow these steps:
 ## Project Initialization (with VSCode)
 To initialize the `todo-manager` project, follow these steps:
@@ -54,3 +56,9 @@ To initialize the `todo-manager` project, follow these steps:
     ```
 
 Now you are ready to start managing your todos with the `todo-manager` application!
+
+
+Future TODO:
+- better authentication (encode password using public/private key)
+- establish better accessToken mechanism
+- add more test cases for a full testing
