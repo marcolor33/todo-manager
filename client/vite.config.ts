@@ -7,7 +7,7 @@ export default defineConfig({
     port:  3000,
   },
   define: {
-    'import.meta.env.API_ENDPOINT': JSON.stringify('localhost:3001')// JSON.stringify(process.env.API_ENDPOINT),
+    'import.meta.env.API_ENDPOINT': JSON.stringify(process.env.API_ENDPOINT),
   },
   plugins: [react()],
 })
