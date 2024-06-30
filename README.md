@@ -2,8 +2,17 @@
 Todo manager
 ## Project Initialization
 
-PG admin: http://localhost:5050 (email "admin@gmail.com", pw: admin)
-
+PG admin: http://localhost:5050
+```
+PGadmin:
+email: admin@gmail.com
+password: admin
+DB connection:
+host: db
+port: 5432
+user: "admin"
+password: "admin"
+```
 Backend openAPI Swagger: http://localhost:3001/openapi
 
 Backend openAPI Swagger: http://localhost:3001/openapi-json
