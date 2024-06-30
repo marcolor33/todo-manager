@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14.2
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+    networks: 
+     - network-backend
+
+  api:
+    restart: always
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
+    build:
+      dockerfile: Dockerfile
+      context: './api'
+    depends_on:
+      - db
+    volumes:
+      - /api/node_modules
+      - ./api:/api
+    ports:
+      - '3001:3001'
+    networks: 
+     - network-backend
+
+  client:
+    environment:
+      API_ENDPOINT: ${API_ENDPOINT}
+    build:
+      dockerfile: Dockerfile
+      context: "./client"
+    depends_on:
+      - api # todo: might not be necessary
+    volumes:
+      - /client/node_modules
+      - ./client:/app
+    ports:
+      - "3000:3000"
+    networks: 
+     - network-backend
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: nest-pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - '5050:80'
+    depends_on:
+      - db
+    networks: 
+     - network-backend
+
+networks:
+  network-backend:
+
+volumes:
+  pg_data:

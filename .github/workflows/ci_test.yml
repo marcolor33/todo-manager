@@ -1,0 +1,52 @@
+name: CI Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+          registry-url: https://registry.yarnpkg.com/
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run test build
+        run: yarn build
+
+  test-client:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+          registry-url: https://registry.yarnpkg.com/
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run test build
+        run: yarn build
