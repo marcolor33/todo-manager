@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
-import { useAuthControllerLogoutMutation } from '../store/authApi';
-import { clearAuthentication } from '../store/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { DefaultException, useAuthControllerLogoutMutation } from '../store/authApi';
+import { clearAuthentication } from '../store/authSlice';
 
 const LogoutPage: FC = () => {
   const naviate = useNavigate();
