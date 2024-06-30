@@ -1,0 +1,29 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.1.0
+jobs:
+  build_and_test_backend: # this can be any name you choose
+    executor: node/default # use the default executor defined within the orb
+    working_directory: api # set the working directory for the job
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          command: yarn test
+          name: Run tests (API)
+          pkg-manager: yarn
+      - run:
+          command: yarn build
+          name: Run Build (API)
+
+  build_and_test_frontend: # this can be any name you choose
+    executor: node/default # use the default executor defined within the orb
+    working_directory: client # set the working directory for the job
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          command: yarn build
+          name: Run Build (Client)
