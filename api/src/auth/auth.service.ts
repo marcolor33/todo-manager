@@ -17,6 +17,11 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  async getMe(jwtPayload: JwtPayload) {
+    const foundUser = await this.userService.findOneById(jwtPayload.userId);
+    return foundUser;
+  }
+
   async register(registerDto: RegisterDto) {
     const { email } = registerDto;
     const foundUser = await this.userService.findOneByEmail(email);

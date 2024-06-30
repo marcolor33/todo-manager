@@ -1,19 +1,21 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
-  ApiResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { AuthService } from './auth.service';
-import { Public } from './auth.guard';
+import { AuthGuard, Public } from './auth.guard';
 import { accessTokenCookieKey } from './constants';
 import { User } from '../user/entities/user.entity';
 import { DefaultException } from 'src/common/interfaces/defaultException';
 import { LoginResponseDto } from './dto/loginResponse.dto';
+import { RequestJwt } from 'src/common/decorators/requestJwt.decorator';
+import { JwtPayload } from 'src/common/interfaces/jwtPayload';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -33,7 +35,7 @@ export class AuthController {
   }
 
   @ApiBadRequestResponse({ type: DefaultException })
-  @ApiResponse({
+  @ApiOkResponse({
     description: 'Login',
     type: LoginResponseDto,
   })
@@ -56,6 +58,18 @@ export class AuthController {
     return { accessToken };
   }
 
+  @ApiUnauthorizedResponse({ type: DefaultException })
+  @ApiOkResponse({
+    description: 'getMe',
+    type: User,
+  })
+  @UseGuards(AuthGuard)
+  @Post('getMe')
+  async getMe(@RequestJwt() JwtPayload: JwtPayload): Promise<User> {
+    return this.authService.getMe(JwtPayload);
+  }
+
+  @UseGuards(AuthGuard)
   @Post('logout')
   async logout(@Res({ passthrough: true }) res: Response) {
     res.clearCookie(accessTokenCookieKey).send({ status: 'ok' });

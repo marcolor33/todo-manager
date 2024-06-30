@@ -17,15 +17,19 @@ const SubmitFormDialog: FC<SubmitFormDialogProps> = ({
 }) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <span>{title}</span>
         <IconButton edge="end" onClick={onClose}>
           <Close />
         </IconButton>
       </DialogTitle>
-      <DialogContent>
-        {children}
-      </DialogContent>
+      <DialogContent>{children}</DialogContent>
     </Dialog>
   );
 };

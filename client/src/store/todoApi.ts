@@ -1,4 +1,4 @@
-import { api } from "./api";
+import { api } from './api';
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     todoControllerCreate: build.mutation<
@@ -7,7 +7,7 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/todo`,
-        method: "POST",
+        method: 'POST',
         body: queryArg.createTodoDto,
       }),
     }),
@@ -37,7 +37,7 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/todo/${queryArg.id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body: queryArg.updateTodoDto,
       }),
     }),
@@ -45,7 +45,7 @@ const injectedRtkApi = api.injectEndpoints({
       TodoControllerRemoveApiResponse,
       TodoControllerRemoveApiArg
     >({
-      query: (queryArg) => ({ url: `/todo/${queryArg.id}`, method: "DELETE" }),
+      query: (queryArg) => ({ url: `/todo/${queryArg.id}`, method: 'DELETE' }),
     }),
   }),
   overrideExisting: false,
@@ -59,7 +59,7 @@ export type TodoControllerCreateApiArg = {
 export type TodoControllerQueryApiResponse =
   /** status 200 Query todos */ Todo[];
 export type TodoControllerQueryApiArg = {
-  status?: "notStarted" | "inProgress" | "completed";
+  status?: 'notStarted' | 'inProgress' | 'completed';
   dueDate?: string;
   sortBy?: string;
   sortOrder?: string;
@@ -80,7 +80,7 @@ export type TodoControllerRemoveApiResponse =
 export type TodoControllerRemoveApiArg = {
   id: number;
 };
-export type TodoStatus = "notStarted" | "inProgress" | "completed";
+export type TodoStatus = 'notStarted' | 'inProgress' | 'completed';
 export type Todo = {
   id: number;
   userId: number;

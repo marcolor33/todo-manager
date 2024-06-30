@@ -17,7 +17,6 @@ export class CreateTodoDto {
 
   @ApiProperty({ required: false })
   @IsString()
-  @IsNotEmpty()
   @IsOptional()
   description?: string;
 

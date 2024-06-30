@@ -1,4 +1,4 @@
-import { api } from "./api";
+import { api } from './api';
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     authControllerRegister: build.mutation<
@@ -7,7 +7,7 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/auth/register`,
-        method: "POST",
+        method: 'POST',
         body: queryArg.registerDto,
       }),
     }),
@@ -17,15 +17,21 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/auth/login`,
-        method: "POST",
+        method: 'POST',
         body: queryArg.loginDto,
       }),
+    }),
+    authControllerGetMe: build.mutation<
+      AuthControllerGetMeApiResponse,
+      AuthControllerGetMeApiArg
+    >({
+      query: () => ({ url: `/auth/getMe`, method: 'POST' }),
     }),
     authControllerLogout: build.mutation<
       AuthControllerLogoutApiResponse,
       AuthControllerLogoutApiArg
     >({
-      query: () => ({ url: `/auth/logout`, method: "POST" }),
+      query: () => ({ url: `/auth/logout`, method: 'POST' }),
     }),
   }),
   overrideExisting: false,
@@ -35,10 +41,13 @@ export type AuthControllerRegisterApiResponse = /** status 200 register */ User;
 export type AuthControllerRegisterApiArg = {
   registerDto: RegisterDto;
 };
-export type AuthControllerLoginApiResponse = unknown;
+export type AuthControllerLoginApiResponse =
+  /** status 200 Login */ LoginResponseDto;
 export type AuthControllerLoginApiArg = {
   loginDto: LoginDto;
 };
+export type AuthControllerGetMeApiResponse = /** status 200 getMe */ User;
+export type AuthControllerGetMeApiArg = void;
 export type AuthControllerLogoutApiResponse = unknown;
 export type AuthControllerLogoutApiArg = void;
 export type User = {
@@ -67,5 +76,6 @@ export type LoginDto = {
 export const {
   useAuthControllerRegisterMutation,
   useAuthControllerLoginMutation,
+  useAuthControllerGetMeMutation,
   useAuthControllerLogoutMutation,
 } = injectedRtkApi;

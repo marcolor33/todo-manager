@@ -4,23 +4,33 @@ import { Todo } from '../store/todoApi';
 import SubmitFormDialog from './SubmitDialog';
 
 interface UpdateTodoDialogProps {
-    open: boolean;
-    onClose: () => void;
-    todo: Todo;
-    onSubmitComplete: () => void
+  open: boolean;
+  onClose: () => void;
+  todo: Todo;
+  onUpdateComplete: () => void;
+  onDeleteComplete: () => void;
 }
 
-const UpdateTodoDialog: FC<UpdateTodoDialogProps> = ({ open, onClose, todo, onSubmitComplete }) => {
-    return (
-
-        <SubmitFormDialog
-            open={open}
-            onClose={onClose}
-            title={`Update TODO: ${todo.id} ${todo.name}`}
-        >
-            <UpdateTodoForm todo={todo} onSubmitComplete={onSubmitComplete} />
-        </SubmitFormDialog>
-    );
+const UpdateTodoDialog: FC<UpdateTodoDialogProps> = ({
+  open,
+  onClose,
+  todo,
+  onUpdateComplete,
+  onDeleteComplete,
+}) => {
+  return (
+    <SubmitFormDialog
+      open={open}
+      onClose={onClose}
+      title={`Update TODO: ${todo.id} ${todo.name}`}
+    >
+      <UpdateTodoForm
+        todo={todo}
+        onUpdateComplete={onUpdateComplete}
+        onDeleteComplete={onDeleteComplete}
+      />
+    </SubmitFormDialog>
+  );
 };
 
 export default UpdateTodoDialog;

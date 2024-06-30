@@ -7,7 +7,6 @@ interface AuthGuardProps {
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const user = useAppSelector((state) => state.authSlice.user);
-  console.log(`user: ${user}`)
   return user ? children : <Navigate to="/" />;
 };
 

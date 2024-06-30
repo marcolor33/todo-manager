@@ -1,16 +1,21 @@
 import React, { useEffect } from 'react';
-import { Button, Box } from '@mui/material';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import FormInput from './FormInput';
+import { Button, Box, Typography } from '@mui/material';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DefaultException, useTodoControllerCreateMutation } from '../store/todoApi';
+import FormInput from './FormInput';
+import {
+  DefaultException,
+  useTodoControllerCreateMutation,
+} from '../store/todoApi';
 
 interface CreateTodoFormProps {
   onSubmitComplete: () => void;
 }
 
-const CreateTodoForm: React.FC<CreateTodoFormProps> = ({ onSubmitComplete }) => {
+const CreateTodoForm: React.FC<CreateTodoFormProps> = ({
+  onSubmitComplete,
+}) => {
   const createTodoFormSchema = z.object({
     name: z.string().min(1, 'Todo name is required'),
   });
@@ -24,17 +29,24 @@ const CreateTodoForm: React.FC<CreateTodoFormProps> = ({ onSubmitComplete }) => 
   const [createTodo, { isLoading, isSuccess, error, isError }] =
     useTodoControllerCreateMutation();
 
-  const { reset, handleSubmit, formState: { isSubmitSuccessful } } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitSuccessful },
+  } = methods;
 
   useEffect(() => {
     if (isSuccess) {
       alert('createTodo success!');
-      onSubmitComplete()
+      onSubmitComplete();
     }
 
     if (isError) {
       if ('status' in error) {
-        const errMsg = 'error' in error ? error.error : (error.data as DefaultException).message;
+        const errMsg =
+          'error' in error
+            ? error.error
+            : (error.data as DefaultException).message;
         alert(errMsg);
       }
     }
@@ -54,10 +66,13 @@ const CreateTodoForm: React.FC<CreateTodoFormProps> = ({ onSubmitComplete }) => 
     createTodo({ createTodoDto: { name } });
   };
 
-  return (
+  return (<Box>
+    <Typography fontSize={20} fontWeight={700}>
+      Create a new task
+    </Typography>
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', gap: 1 }}>
           <FormInput
             variant="outlined"
             label="Name"
@@ -67,12 +82,18 @@ const CreateTodoForm: React.FC<CreateTodoFormProps> = ({ onSubmitComplete }) => 
             placeholder="Todo name"
             fullWidth
           />
-          <Button type="submit" variant="contained" color="primary" disabled={isLoading}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isLoading}
+          >
             Create
           </Button>
         </Box>
       </form>
     </FormProvider>
+  </Box>
   );
 };
 
